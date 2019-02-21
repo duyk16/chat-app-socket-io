@@ -54,6 +54,21 @@ body {
   box-sizing: border-box;
 }
 
+.scroll {
+  overflow-y: scroll;
+  height: 440px;
+}
+.scroll::-webkit-scrollbar {
+  width: 10px;
+}
+.scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 10px;
+}
 #main {
   display: flex;
   flex-direction: column;
@@ -117,25 +132,16 @@ body {
   margin: 15px 20px;
   /* padding: 10px */
 }
-#chat-input .input-group {
+#chat-input .input-item {
   flex: 90;
   height: 100%;
   border-right: 1px solid #ccc;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
   color: #fff;
-}
-#chat-input .input-item {
-  height: 70%;
-  box-sizing: border-box;
   padding: 10px;
 }
-#chat-input .input-item:first-child {
-  height: 30%;
-  border-bottom: 1px solid #666;
-  padding: 5px 10px;
-}
-#chat-input .input-group input {
+#chat-input .input-item input {
   display: block;
   width: 100%;
   background: transparent;
@@ -144,12 +150,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-#chat-input .input-group input::placeholder {
+#chat-input .input-item input::placeholder {
   color: #fff;
   font-size: 12px;
   font-family: Arial, Helvetica, sans-serif;
 }
-#chat-input .input-group textarea {
+#chat-input .input-item textarea {
   display: block;
   width: 100%;
   height: 100%;
@@ -158,7 +164,7 @@ body {
   color: #fff;
   font-family: Arial, Helvetica, sans-serif;
 }
-#chat-input .input-group textarea::placeholder {
+#chat-input .input-item textarea::placeholder {
   color: #fff;
   font-size: 14px;
   font-family: Arial, Helvetica, sans-serif;
