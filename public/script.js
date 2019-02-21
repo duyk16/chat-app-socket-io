@@ -45,7 +45,9 @@ class App extends React.Component {
   constructor(props, context) {
     super(props, context)
     this.state = {
-      userName: ''
+      userName: '',
+      userId: '',
+      userOnline: {}
     }
 
     this._register = this._register.bind(this)
@@ -59,11 +61,21 @@ class App extends React.Component {
   componentDidMount = () => {
     socket.on('REGISTER', (res) => {
       if (res.status === 'success') {
-        console.log(res);
         this.setState({
           ...this.state,
-          userName: res.data
+          userName: res.data.userName,
+          userId: res.data.userId
         })
+      }
+    })
+
+    socket.on('USER_ONLINE', (res) => {
+      if (res.status === 'success') {
+        this.setState({
+          ...this.state,
+          userOnline: res.data
+        })
+        console.log(this.state);
       }
     })
   };
@@ -76,7 +88,10 @@ class App extends React.Component {
           <Register 
             register={this._register}
           /> :
-          <Main />
+          <Main 
+            userOnline={this.state.userOnline}
+            userName={this.state.userName}
+          />
         }
       </div>
     )
@@ -132,15 +147,22 @@ class Register extends React.Component {
 
 class Main extends React.Component {
   render() {
+    let { userOnline } = this.props
     return (
       <div id="wrapper">
 
         <div className="col-4">
           <div id="status-aside">
             <div className="scroll" id="user-online">
-
-              <UserStatusItem />
-
+              {userOnline.map((item, index) => {
+                if (item !== this.props.userName)
+                return (
+                  <UserStatusItem 
+                    userName={item}
+                    key={index}
+                  />
+                )
+              })}
             </div>
           </div>
         </div>
@@ -195,8 +217,8 @@ class Main extends React.Component {
 class UserStatusItem extends React.Component {
   render() {
     return (
-      <div className="list-user-item item-active">
-        <div className="user-name">Anhxtanh</div>
+      <div className="list-user-item">
+        <div className="user-name">{this.props.userName}</div>
         <i className="fas fa-circle text-green"></i>
         <span className="user-status"> Online</span>
       </div>

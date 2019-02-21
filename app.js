@@ -17,7 +17,7 @@ var userOnline = {
 io.on('connection', function (socket) {
   console.log(socket.id, 'connected');
 
-  socket.on('CLIENT-DATA', (data) => {
+  socket.on('CLIENT_DATA', (data) => {
     console.log(data);
   })
 
@@ -30,15 +30,32 @@ io.on('connection', function (socket) {
     userOnline[data] = socket.id
     console.log(userOnline);
     
-    socket.emit('REGISTER', {status: 'success', data})
-    io.emit('USER-ONLINE', {data: userOnline})
-  })
-
-    io.emit('USER-ONLINE', {
-      data: userOnline
+    socket.emit('REGISTER', {
+      status: 'success', 
+      data: {userName: data, userId: socket.id}
     })
 
+    io.emit('USER_ONLINE', {
+      status: 'success',
+      data: getOnlineUsers()
+    })
+  })
+
+  io.emit('USER_ONLINE', {
+    status: 'success',
+    data: getOnlineUsers()
+  })
+
 });
+
+
+function getOnlineUsers() {
+  let result = []
+  for (let key in userOnline) {
+    result.push(key)
+  }
+  return result
+}
 
 http.listen(port, () => {
   console.log(`Listening on port ${port}...`);

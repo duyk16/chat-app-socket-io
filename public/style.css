@@ -84,10 +84,13 @@ body {
   padding: 10px 20px;
   color: #fff;
   line-height: 25px;
+  cursor: pointer;
+}
+.list-user-item:hover {
+  background: rgba(59, 84, 96, 1);
 }
 .item-active {
   background: rgba(59, 84, 96, 1);
-
 }
 .list-user-item .user-name {
   font-size: 20px;
