@@ -237,14 +237,13 @@ class ChatInput extends React.Component {
   }
   
   handleChange(e) {
-    console.log(e.keyCode);
-    
     this.setState({
       ...this.state,
       message: e.target.value
     })
   }
-  sendMessage() {
+  sendMessage(e) {
+    e.target.value = ''
     if (!this.state.message) return
     this.props.sendMessage(this.state.message)
     this.setState({
@@ -259,13 +258,11 @@ class ChatInput extends React.Component {
           <textarea 
             id="text-input" 
             placeholder="Type your message..."
-            value={this.state.message}
             onChange={this.handleChange}
             onKeyUp = {(e) => {
-              if (e.keyCode === 13) this.sendMessage()
+              if (e.keyCode === 13) this.sendMessage(e)
             }}
           >
-
           </textarea>
         </div>
 
