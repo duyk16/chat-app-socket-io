@@ -11,9 +11,7 @@ app.get('/', (req, res) => {
   res.sendFile('/index.html')
 })
 
-var userOnline = {
-  "Test User": "socketId1"
-}
+var userOnline = {}
 io.on('connection', function (socket) {
   let userName = ''
   console.log(socket.id, 'connected');
@@ -55,7 +53,26 @@ io.on('connection', function (socket) {
     })
   })
 
-  
+  socket.on('PRIVATE_MESSAGE', (req) => {
+    console.log(req);
+    if (!userOnline[req.receiver]
+      || !userOnline[req.sender]
+      || !req.data
+    ) return
+
+    socket.emit('PRIVATE_MESSAGE', {
+      sender: req.sender,
+      receiver: req.receiver,
+      data: req.data
+    })
+    io.to(userOnline[req.receiver]).emit('PRIVATE_MESSAGE', {
+      sender: req.sender,
+      receiver: req.receiver,
+      data: req.data
+    })
+
+  })
+
 });
 
 
