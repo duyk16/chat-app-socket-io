@@ -12,9 +12,10 @@ app.get('/', (req, res) => {
 })
 
 var userOnline = {
-  "Bill Gate": "socketId1"
+  "Test User": "socketId1"
 }
 io.on('connection', function (socket) {
+  let userName = ''
   console.log(socket.id, 'connected');
 
   socket.on('CLIENT_DATA', (data) => {
@@ -26,9 +27,8 @@ io.on('connection', function (socket) {
       socket.emit('REGISTER', {status: 'error'})
       return
     }
-    
-    userOnline[data] = socket.id
-    console.log(userOnline);
+    userName = data
+    userOnline[userName] = socket.id
     
     socket.emit('REGISTER', {
       status: 'success', 
@@ -46,6 +46,16 @@ io.on('connection', function (socket) {
     data: getOnlineUsers()
   })
 
+  socket.on('disconnect', () => {
+    if (!userName) return
+    delete userOnline[userName]
+    io.emit('USER_ONLINE', {
+      status: 'success',
+      data: getOnlineUsers()
+    })
+  })
+
+  
 });
 
 

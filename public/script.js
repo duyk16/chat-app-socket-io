@@ -1,46 +1,5 @@
 const socket = io();
 
-// $(document).ready(function() {
-//   // $('#wrapper').hide()
-
-//   $('#submit-register').on('click', function() {
-//     let userName = $('#user-name-register').val()
-//     if (!userName) return 
-//     socket.emit('REGISTER', userName)
-//   })
-
-//   socket.on('REGISTER', (res) => {
-//     if (res.status === 'success') {
-//       $('#register').hide()
-//       $('#wrapper').show()
-//     }
-//   })
-//   socket.on('USER-ONLINE', (res) => {
-//     let data = res.data
-//     let text = ''
-//     for (let userName in data) {
-//       let item = `<div className="list-user-item" data-id="${data[userName]}">
-//             <div className="user-name">${userName}</div>
-//             <i className="fas fa-circle text-green"></i>
-//             <span className="user-status">Online</span>
-//           </div>`
-//       text += item
-//     }
-//     $('#user-online').append(text)
-//   })
-
-
-
-//   $('#sent-message').on('click', function() {
-//     let textInput = $('#text-input').val()
-//     if (!textInput) return
-    
-//     socket.emit('CLIENT-DATA', textInput)
-
-//   })
-  
-// })
-
 class App extends React.Component {
   constructor(props, context) {
     super(props, context)
@@ -169,6 +128,7 @@ class Main extends React.Component {
 
         <div className="col-8">
           <div id="main">
+
             <div id="content">
               <ul>
 
@@ -178,7 +138,7 @@ class Main extends React.Component {
                 </li>
                 {/* <li>
                   <div className="message item-right">Hello</div>
-                  <div style="clear: both"></div>
+                  <div style={{clear: "both"}}></div>
                 </li>
                 <li>
                   <div className="message item-right">Hello</div>
@@ -191,22 +151,9 @@ class Main extends React.Component {
             
               </ul>
             </div>
+            
+            <ChatInput />
 
-            <div id="chat-input">
-              <div className="input-item">
-                <textarea 
-                  id="text-input" 
-                  placeholder="Type your message..."
-                >
-
-                </textarea>
-              </div>
-
-              <div className="button" id="sent-message">
-                <i className="fab fa-telegram-plane"></i>
-              </div>
-
-            </div>
           </div>        
         </div>
         
@@ -221,6 +168,27 @@ class UserStatusItem extends React.Component {
         <div className="user-name">{this.props.userName}</div>
         <i className="fas fa-circle text-green"></i>
         <span className="user-status"> Online</span>
+      </div>
+    )
+  }
+}
+class ChatInput extends React.Component {
+  render() {
+    return (
+      <div id="chat-input">
+        <div className="input-item">
+          <textarea 
+            id="text-input" 
+            placeholder="Type your message..."
+          >
+
+          </textarea>
+        </div>
+
+        <div className="button" id="sent-message">
+          <i className="fab fa-telegram-plane"></i>
+        </div>
+
       </div>
     )
   }
